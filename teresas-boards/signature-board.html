@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cured Meats, Cheese, Fruits and Nuts – Teresa's Boards</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #fdf6ee;
+      color: #3b2a1a;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background-color: #5c3d2e;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      height: 64px;
+      position: relative;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+
+    .site-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #f5e6d3;
+      font-size: 1.6rem;
+      letter-spacing: 2px;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #f5e6d3;
+      text-decoration: none;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+      transition: color 0.2s;
+    }
+
+    .back-btn:hover { color: #e8c9a0; }
+
+    .back-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 340px;
+      overflow: hidden;
+    }
+
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(60,30,10,0.65) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 36px 24px;
+      text-align: center;
+    }
+
+    .hero-overlay h1 {
+      color: #f5e6d3;
+      font-size: 2.6rem;
+      letter-spacing: 3px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    .hero-overlay p {
+      color: #e8c9a0;
+      font-size: 1rem;
+      margin-top: 8px;
+      max-width: 520px;
+      line-height: 1.7;
+    }
+
+    /* ── INGREDIENTS ── */
+    .ingredients-section {
+      max-width: 1000px;
+      margin: 60px auto 80px;
+      padding: 0 24px;
+    }
+
+    .section-heading {
+      text-align: center;
+      font-size: 1.7rem;
+      color: #5c3d2e;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .section-sub {
+      text-align: center;
+      color: #7a5243;
+      font-size: 0.95rem;
+      margin-bottom: 36px;
+    }
+
+    .ingredients-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+    }
+
+    .ingredient-list {
+      background: #fff8f0;
+      border: 1px solid #d4a97a;
+      border-radius: 10px;
+      padding: 22px 22px 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .ingredient-list h4 {
+      font-size: 0.95rem;
+      color: #5c3d2e;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      border-bottom: 2px solid #d4a97a;
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+    }
+
+    .ingredient-list ul {
+      list-style: none;
+    }
+
+    .ingredient-list ul li {
+      font-size: 0.92rem;
+      color: #3b2a1a;
+      padding: 6px 0;
+      border-bottom: 1px solid #f0dfc8;
+      line-height: 1.4;
+    }
+
+    .ingredient-list ul li:last-child { border-bottom: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .site-title { font-size: 1.1rem; }
+      .hero { height: 240px; }
+      .hero-overlay h1 { font-size: 1.7rem; letter-spacing: 1px; }
+      .hero-overlay p { font-size: 0.9rem; }
+      .ingredients-section { margin: 36px auto 48px; padding: 0 16px; }
+      .section-heading { font-size: 1.3rem; }
+      .ingredients-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      background-color: #5c3d2e;
+      color: #c9a07a;
+      padding: 24px;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="back-btn">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Back
+    </a>
+    <a href="index.html" class="site-title">Teresa's Boards</a>
+  </nav>
+
+  <div class="hero">
+    <img src="https://images.unsplash.com/photo-1678572823447-45fc146df43c?w=1200&q=80&auto=format&fit=crop" alt="Cured Meats, Cheese, Fruits and Nuts" />
+    <div class="hero-overlay">
+      <h1>Cured Meats, Cheese, Fruits and Nuts</h1>
+      <p>Our curated selection of the finest deli meats, artisan cheeses, fresh fruits, and hand-picked nuts.</p>
+    </div>
+  </div>
+
+  <section class="ingredients-section">
+    <h2 class="section-heading">What's On Your Board</h2>
+    <p class="section-sub">Every Signature Board is assembled with the following hand-selected items.</p>
+    <div class="ingredients-grid">
+
+      <div class="ingredient-list">
+        <h4>Deli Meats</h4>
+        <ul>
+          <li>Prosciutto di Parma</li>
+          <li>Genoa Salami</li>
+          <li>Soppressata</li>
+          <li>Capicola</li>
+          <li>Pepperoni</li>
+          <li>Bresaola</li>
+        </ul>
+      </div>
+
+      <div class="ingredient-list">
+        <h4>Cheeses</h4>
+        <ul>
+          <li>Sharp Aged Cheddar</li>
+          <li>Brie de Meaux</li>
+          <li>Manchego</li>
+          <li>Gouda</li>
+          <li>Gorgonzola</li>
+          <li>Herbed Goat Cheese</li>
+        </ul>
+      </div>
+
+      <div class="ingredient-list">
+        <h4>Fruits</h4>
+        <ul>
+          <li>Red &amp; Green Grapes</li>
+          <li>Fresh Strawberries</li>
+          <li>Blackberries</li>
+          <li>Dried Apricots</li>
+          <li>Sliced Green Apple</li>
+          <li>Fresh Figs</li>
+        </ul>
+      </div>
+
+      <div class="ingredient-list">
+        <h4>Nuts</h4>
+        <ul>
+          <li>Marcona Almonds</li>
+          <li>Candied Pecans</li>
+          <li>Roasted Cashews</li>
+          <li>Pistachios</li>
+          <li>Walnuts</li>
+          <li>Honey-Glazed Hazelnuts</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2026 Teresa's Boards &nbsp;|&nbsp; All Rights Reserved
+  </footer>
+
+</body>
+</html>

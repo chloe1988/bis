@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Delectable Reviews – Teresa's Boards</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #fdf6ee;
+      color: #3b2a1a;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background-color: #5c3d2e;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      height: 64px;
+      position: relative;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+
+    .site-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #f5e6d3;
+      font-size: 1.6rem;
+      letter-spacing: 2px;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #f5e6d3;
+      text-decoration: none;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+      transition: color 0.2s;
+    }
+
+    .back-btn:hover { color: #e8c9a0; }
+
+    .back-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 300px;
+      overflow: hidden;
+    }
+
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(60,30,10,0.65) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 36px 24px;
+      text-align: center;
+    }
+
+    .hero-overlay h1 {
+      color: #f5e6d3;
+      font-size: 2.6rem;
+      letter-spacing: 3px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    .hero-overlay p {
+      color: #e8c9a0;
+      font-size: 1rem;
+      margin-top: 8px;
+      max-width: 520px;
+      line-height: 1.7;
+    }
+
+    /* ── REVIEWS ── */
+    .reviews-section {
+      max-width: 900px;
+      margin: 60px auto 80px;
+      padding: 0 24px;
+    }
+
+    .section-heading {
+      text-align: center;
+      font-size: 1.7rem;
+      color: #5c3d2e;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .section-sub {
+      text-align: center;
+      color: #7a5243;
+      font-size: 0.95rem;
+      margin-bottom: 48px;
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
+      margin-bottom: 60px;
+    }
+
+    .review-card {
+      background: #fff8f0;
+      border: 1px solid #d4a97a;
+      border-radius: 12px;
+      padding: 28px 24px 22px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+      position: relative;
+    }
+
+    .review-stars {
+      color: #c9902a;
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      letter-spacing: 2px;
+    }
+
+    .review-text {
+      font-size: 0.93rem;
+      color: #3b2a1a;
+      line-height: 1.75;
+      font-style: italic;
+      margin-bottom: 18px;
+    }
+
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-top: 1px solid #f0dfc8;
+      padding-top: 14px;
+    }
+
+    .review-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background-color: #d4a97a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: #fff;
+      font-style: normal;
+      flex-shrink: 0;
+    }
+
+    .review-author-info strong {
+      display: block;
+      font-size: 0.9rem;
+      color: #5c3d2e;
+    }
+
+    .review-author-info span {
+      font-size: 0.8rem;
+      color: #9b6b52;
+    }
+
+    /* ── LEAVE A REVIEW ── */
+    .leave-review {
+      background: linear-gradient(135deg, #f0dfc8 0%, #fdf6ee 100%);
+      border: 1px solid #d4a97a;
+      border-radius: 12px;
+      padding: 36px 32px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .leave-review h3 {
+      text-align: center;
+      font-size: 1.3rem;
+      color: #5c3d2e;
+      letter-spacing: 1.5px;
+      margin-bottom: 6px;
+    }
+
+    .leave-review p {
+      text-align: center;
+      color: #7a5243;
+      font-size: 0.9rem;
+      margin-bottom: 28px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.88rem;
+      color: #5c3d2e;
+      letter-spacing: 0.5px;
+      margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #d4a97a;
+      border-radius: 6px;
+      background: #fdf6ee;
+      font-family: 'Georgia', serif;
+      font-size: 0.9rem;
+      color: #3b2a1a;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: #5c3d2e; }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .star-select {
+      display: flex;
+      gap: 8px;
+      font-size: 1.6rem;
+      cursor: pointer;
+      margin-top: 4px;
+    }
+
+    .star-select span {
+      color: #d4a97a;
+      transition: color 0.15s;
+      user-select: none;
+    }
+
+    .star-select span.active,
+    .star-select span:hover,
+    .star-select span:hover ~ span { color: #d4a97a; }
+
+    .star-select span.lit { color: #c9902a; }
+
+    .submit-review {
+      width: 100%;
+      margin-top: 20px;
+      background-color: #5c3d2e;
+      color: #f5e6d3;
+      border: none;
+      border-radius: 6px;
+      padding: 12px;
+      font-family: 'Georgia', serif;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .submit-review:hover { background-color: #7a5243; }
+
+    .success-msg {
+      display: none;
+      text-align: center;
+      padding: 24px 0 8px;
+    }
+
+    .success-msg .checkmark { font-size: 2.5rem; margin-bottom: 8px; }
+
+    .success-msg h4 { color: #5c3d2e; font-size: 1.1rem; margin-bottom: 6px; }
+
+    .success-msg p { color: #7a5243; font-size: 0.9rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .site-title { font-size: 1.1rem; }
+      .hero { height: 220px; }
+      .hero-overlay h1 { font-size: 1.7rem; letter-spacing: 1px; }
+      .hero-overlay p { font-size: 0.9rem; }
+      .reviews-section { margin: 36px auto 48px; padding: 0 16px; }
+      .section-heading { font-size: 1.3rem; }
+      .reviews-grid { grid-template-columns: 1fr; gap: 18px; }
+      .leave-review { padding: 24px 18px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      background-color: #5c3d2e;
+      color: #c9a07a;
+      padding: 24px;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="back-btn">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Back
+    </a>
+    <a href="index.html" class="site-title">Teresa's Boards</a>
+  </nav>
+
+  <div class="hero">
+    <img src="https://images.unsplash.com/photo-1755811248324-c70c1f10a7fd?w=1200&q=80&auto=format&fit=crop" alt="People enjoying a meal together" />
+    <div class="hero-overlay">
+      <h1>Delectable Reviews</h1>
+      <p>See what our customers are saying — and share your own experience with Teresa's Boards.</p>
+    </div>
+  </div>
+
+  <section class="reviews-section">
+    <h2 class="section-heading">What Our Customers Say</h2>
+    <p class="section-sub">Real reviews from real board lovers.</p>
+
+    <div class="reviews-grid">
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Teresa's boards are absolutely stunning. Every item was fresh, perfectly arranged, and tasted incredible. Our guests couldn't stop talking about it all evening!"</p>
+        <div class="review-author">
+          <div class="review-avatar">S</div>
+          <div class="review-author-info">
+            <strong>Sarah M.</strong>
+            <span>Classic Charcuterie — Birthday Party</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"We ordered the Fruit & Sweet Board for our bridal shower and it was a showstopper. Beautiful, delicious, and delivered right on time. Highly recommend!"</p>
+        <div class="review-author">
+          <div class="review-avatar">J</div>
+          <div class="review-author-info">
+            <strong>Jessica R.</strong>
+            <span>Fruit &amp; Sweet Board — Bridal Shower</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The Bread & Dip Board was a huge hit at our wine night. The combinations were creative and everything complemented each other beautifully. Will order again!"</p>
+        <div class="review-author">
+          <div class="review-avatar">L</div>
+          <div class="review-author-info">
+            <strong>Lauren T.</strong>
+            <span>Bread &amp; Dip Board — Wine Night</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Teresa went above and beyond for our corporate event. The custom board was gorgeous and she accommodated all our dietary restrictions without missing a beat."</p>
+        <div class="review-author">
+          <div class="review-avatar">M</div>
+          <div class="review-author-info">
+            <strong>Michael D.</strong>
+            <span>Custom Event Board — Corporate Luncheon</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Ordered the Caviar & Couture board for our anniversary — it was pure luxury. Teresa's attention to detail is unmatched. Every bite was an experience."</p>
+        <div class="review-author">
+          <div class="review-avatar">A</div>
+          <div class="review-author-info">
+            <strong>Amanda &amp; Chris</strong>
+            <span>Caviar &amp; Couture — Anniversary Dinner</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★☆</div>
+        <p class="review-text">"So fresh and so beautifully arranged. The kids absolutely loved the Kids & Family board — it was colorful, fun, and everything was gone within minutes!"</p>
+        <div class="review-author">
+          <div class="review-avatar">K</div>
+          <div class="review-author-info">
+            <strong>Karen W.</strong>
+            <span>Kids &amp; Family Board — Birthday Party</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Leave a Review Form -->
+    <div class="leave-review">
+      <h3>Leave a Review</h3>
+      <p>Loved your board? We'd love to hear from you!</p>
+
+      <div id="reviewForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="reviewName">Your Name</label>
+            <input type="text" id="reviewName" placeholder="Jane Smith" />
+          </div>
+          <div class="form-group">
+            <label for="reviewBoard">Board Ordered</label>
+            <select id="reviewBoard">
+              <option value="">Select a board…</option>
+              <option>Classic Charcuterie</option>
+              <option>Fruit &amp; Sweet Board</option>
+              <option>Bread &amp; Dip Board</option>
+              <option>Custom Event Board</option>
+              <option>Cured Meats, Cheese, Fruits and Nuts</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Your Rating</label>
+          <div class="star-select" id="starSelect">
+            <span data-val="1">★</span>
+            <span data-val="2">★</span>
+            <span data-val="3">★</span>
+            <span data-val="4">★</span>
+            <span data-val="5">★</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="reviewText">Your Review</label>
+          <textarea id="reviewText" placeholder="Tell us about your experience…"></textarea>
+        </div>
+        <button class="submit-review" id="submitReview">Submit Review</button>
+      </div>
+
+      <div class="success-msg" id="reviewSuccess">
+        <div class="checkmark">🌟</div>
+        <h4>Thank You for Your Review!</h4>
+        <p>Your feedback means the world to us. We'll feature it on the site soon!</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2026 Teresa's Boards &nbsp;|&nbsp; All Rights Reserved
+  </footer>
+
+  <script>
+    // Star rating
+    const stars = document.querySelectorAll('#starSelect span');
+    let rating = 0;
+
+    stars.forEach(star => {
+      star.addEventListener('mouseover', () => {
+        const val = +star.dataset.val;
+        stars.forEach(s => s.classList.toggle('lit', +s.dataset.val <= val));
+      });
+      star.addEventListener('mouseout', () => {
+        stars.forEach(s => s.classList.toggle('lit', +s.dataset.val <= rating));
+      });
+      star.addEventListener('click', () => {
+        rating = +star.dataset.val;
+        stars.forEach(s => s.classList.toggle('lit', +s.dataset.val <= rating));
+      });
+    });
+
+    // Submit
+    document.getElementById('submitReview').addEventListener('click', () => {
+      const name = document.getElementById('reviewName').value.trim();
+      const text = document.getElementById('reviewText').value.trim();
+      if (!name || !text || rating === 0) {
+        alert('Please enter your name, a rating, and your review.');
+        return;
+      }
+      document.getElementById('reviewForm').style.display = 'none';
+      document.getElementById('reviewSuccess').style.display = 'block';
+    });
+  </script>
+
+</body>
+</html>

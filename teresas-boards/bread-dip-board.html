@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bread & Dip Board – Teresa's Boards</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #fdf6ee;
+      color: #3b2a1a;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background-color: #5c3d2e;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      height: 64px;
+      position: relative;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+
+    .site-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #f5e6d3;
+      font-size: 1.6rem;
+      letter-spacing: 2px;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #f5e6d3;
+      text-decoration: none;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+      transition: color 0.2s;
+    }
+
+    .back-btn:hover { color: #e8c9a0; }
+
+    .back-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 340px;
+      overflow: hidden;
+    }
+
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(60,30,10,0.65) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 36px 24px;
+      text-align: center;
+    }
+
+    .hero-overlay h1 {
+      color: #f5e6d3;
+      font-size: 2.6rem;
+      letter-spacing: 3px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    .hero-overlay p {
+      color: #e8c9a0;
+      font-size: 1rem;
+      margin-top: 8px;
+      max-width: 520px;
+      line-height: 1.7;
+    }
+
+    /* ── ORDER SECTION ── */
+    .order-section {
+      background: linear-gradient(135deg, #f0dfc8 0%, #fdf6ee 100%);
+      border-top: 2px solid #d4a97a;
+      padding: 60px 24px 80px;
+    }
+
+    .section-heading {
+      text-align: center;
+      font-size: 1.7rem;
+      color: #5c3d2e;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: #7a5243;
+      font-size: 1rem;
+      margin-bottom: 40px;
+    }
+
+    .order-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .order-card {
+      background: #fff8f0;
+      border: 1px solid #d4a97a;
+      border-radius: 10px;
+      padding: 20px 22px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .order-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    }
+
+    .order-card--featured {
+      border-color: #7a6a3e;
+      background: #fdfaf0;
+      box-shadow: 0 2px 12px rgba(122,106,62,0.18);
+    }
+
+    .order-icon {
+      flex-shrink: 0;
+      width: 64px;
+      height: 64px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .order-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .order-info { flex: 1; }
+
+    .order-info h3 {
+      font-size: 1rem;
+      color: #5c3d2e;
+      margin-bottom: 4px;
+    }
+
+    .order-info p {
+      font-size: 0.85rem;
+      color: #7a5243;
+      line-height: 1.5;
+    }
+
+    .order-btn {
+      flex-shrink: 0;
+      background-color: #5c3d2e;
+      color: #f5e6d3;
+      border: none;
+      border-radius: 6px;
+      padding: 9px 18px;
+      font-size: 0.85rem;
+      font-family: 'Georgia', serif;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .order-btn:hover { background-color: #7a5243; }
+
+    .order-btn--olive {
+      background-color: #7a6a3e;
+      color: #fff;
+    }
+
+    .order-btn--olive:hover { background-color: #5e5130; }
+
+    /* ── ORDER DIALOG ── */
+    .dialog-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 300;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .dialog-overlay.open { display: flex; }
+
+    .dialog {
+      background: #fff8f0;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+      overflow: hidden;
+    }
+
+    .dialog-header {
+      background-color: #5c3d2e;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .dialog-header h3 {
+      color: #f5e6d3;
+      font-size: 1.15rem;
+      letter-spacing: 1.5px;
+    }
+
+    .dialog-header span {
+      color: #c9a07a;
+      font-size: 0.85rem;
+      font-style: italic;
+    }
+
+    .dialog-close {
+      background: none;
+      border: none;
+      color: #f5e6d3;
+      font-size: 1.5rem;
+      cursor: pointer;
+      line-height: 1;
+      margin-left: 16px;
+    }
+
+    .dialog-close:hover { color: #e8c9a0; }
+
+    .dialog-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .dialog-body label {
+      font-size: 0.88rem;
+      color: #5c3d2e;
+      letter-spacing: 0.5px;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .dialog-body input,
+    .dialog-body select,
+    .dialog-body textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #d4a97a;
+      border-radius: 6px;
+      background: #fdf6ee;
+      font-family: 'Georgia', serif;
+      font-size: 0.9rem;
+      color: #3b2a1a;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .dialog-body input:focus,
+    .dialog-body select:focus,
+    .dialog-body textarea:focus { border-color: #5c3d2e; }
+
+    .dialog-body textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .dialog-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .dialog-footer {
+      padding: 0 24px 24px;
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+
+    .btn-cancel {
+      background: none;
+      border: 1px solid #d4a97a;
+      border-radius: 6px;
+      padding: 10px 22px;
+      font-family: 'Georgia', serif;
+      font-size: 0.9rem;
+      color: #7a5243;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .btn-cancel:hover { background-color: #f0dfc8; }
+
+    .btn-submit {
+      background-color: #5c3d2e;
+      color: #f5e6d3;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 28px;
+      font-family: 'Georgia', serif;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .btn-submit:hover { background-color: #7a5243; }
+
+    .dialog-success {
+      display: none;
+      text-align: center;
+      padding: 40px 24px;
+    }
+
+    .dialog-success .checkmark { font-size: 3rem; margin-bottom: 12px; }
+
+    .dialog-success h3 {
+      color: #5c3d2e;
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+
+    .dialog-success p { color: #7a5243; font-size: 0.9rem; line-height: 1.6; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .site-title { font-size: 1.1rem; }
+      .hero { height: 240px; }
+      .hero-overlay h1 { font-size: 1.7rem; letter-spacing: 1px; }
+      .hero-overlay p { font-size: 0.9rem; }
+      .order-section { padding: 40px 16px 60px; }
+      .section-heading { font-size: 1.3rem; }
+      .order-grid { grid-template-columns: 1fr; }
+      .order-card { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .order-btn { width: 100%; text-align: center; }
+      .dialog { margin: 0 8px; max-height: 95vh; overflow-y: auto; }
+      .dialog-row { grid-template-columns: 1fr; }
+      .dialog-body { padding: 16px; }
+      .dialog-footer { padding: 0 16px 16px; }
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      background-color: #5c3d2e;
+      color: #c9a07a;
+      padding: 24px;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="back-btn">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Back
+    </a>
+    <a href="index.html" class="site-title">Teresa's Boards</a>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero">
+    <img src="https://images.unsplash.com/photo-1534534495550-788ebedf8c10?w=1200&q=80&auto=format&fit=crop" alt="Bread and dip board with cheeses and spreads" />
+    <div class="hero-overlay">
+      <h1>Bread &amp; Dip Board</h1>
+      <p>Warm breads, artisan crackers, hummus, and hand-crafted spreads perfect for any gathering.</p>
+    </div>
+  </div>
+
+  <!-- Order Options -->
+  <section class="order-section">
+    <h2 class="section-heading">Order Your Board</h2>
+    <p class="section-subtitle">Pick the spread that fits your gathering and we'll take care of the rest.</p>
+    <div class="order-grid">
+
+      <div class="order-card">
+        <div class="order-icon"><img src="https://images.unsplash.com/photo-1591299177061-2151e53fcaea?w=128&q=80&auto=format&fit=crop" alt="Homemade bread and hummus" /></div>
+        <div class="order-info">
+          <h3>The Classic Dip Board</h3>
+          <p>Sourdough, baguette slices, pita, hummus, tzatziki, and a roasted red pepper spread.</p>
+        </div>
+        <button class="order-btn">Order</button>
+      </div>
+
+      <div class="order-card">
+        <div class="order-icon"><img src="https://images.unsplash.com/photo-1755404215191-abc0083c4d07?w=128&q=80&auto=format&fit=crop" alt="Olives and olive oil" /></div>
+        <div class="order-info">
+          <h3>Mediterranean Spread</h3>
+          <p>Warm pita, olive tapenade, baba ganoush, feta dip, stuffed grape leaves, and marinated olives.</p>
+        </div>
+        <button class="order-btn">Order</button>
+      </div>
+
+      <div class="order-card">
+        <div class="order-icon"><img src="https://images.unsplash.com/photo-1751379839987-38af992d2b84?w=128&q=80&auto=format&fit=crop" alt="Bread with fig and herbs" /></div>
+        <div class="order-info">
+          <h3>Garlic &amp; Herb Board</h3>
+          <p>Focaccia, herb-infused olive oil, roasted garlic, whipped ricotta, and fresh bruschetta toppings.</p>
+        </div>
+        <button class="order-btn">Order</button>
+      </div>
+
+      <div class="order-card">
+        <div class="order-icon"><img src="https://images.unsplash.com/photo-1549032404-01ded1c8821b?w=128&q=80&auto=format&fit=crop" alt="Beetroot spread on bread" /></div>
+        <div class="order-info">
+          <h3>Bold &amp; Spicy Board</h3>
+          <p>Crusty bread, spicy harissa, jalapeño hummus, pepper jack spread, and pickled vegetables.</p>
+        </div>
+        <button class="order-btn">Order</button>
+      </div>
+
+      <div class="order-card order-card--featured">
+        <div class="order-icon"><img src="https://images.unsplash.com/photo-1579278092966-9ac39412a4dd?w=128&q=80&auto=format&fit=crop" alt="Honeycomb" /></div>
+        <div class="order-info">
+          <h3>Honey &amp; Artisan Board</h3>
+          <p>Rustic breads, raw honeycomb, whipped butter, fig jam, brie, and assorted artisan crackers.</p>
+        </div>
+        <button class="order-btn order-btn--olive">Order</button>
+      </div>
+
+      <div class="order-card">
+        <div class="order-icon"><img src="https://images.unsplash.com/photo-1760508018905-64d0f94e4098?w=128&q=80&auto=format&fit=crop" alt="Fresh avocado and vegetables on board" /></div>
+        <div class="order-info">
+          <h3>Garden Fresh Board</h3>
+          <p>Multigrain crackers, avocado dip, cucumber hummus, veggie sticks, and a light herb vinaigrette.</p>
+        </div>
+        <button class="order-btn">Order</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Order Dialog -->
+  <div class="dialog-overlay" id="orderDialog">
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+      <div class="dialog-header">
+        <h3 id="dialogTitle"></h3>
+        <span id="dialogSubtitle"></span>
+        <button class="dialog-close" id="dialogClose" aria-label="Close">&times;</button>
+      </div>
+
+      <div id="dialogForm">
+        <div class="dialog-body">
+          <div class="dialog-row">
+            <div>
+              <label for="orderName">Your Name</label>
+              <input type="text" id="orderName" placeholder="Teresa Smith" />
+            </div>
+            <div>
+              <label for="orderPhone">Phone Number</label>
+              <input type="tel" id="orderPhone" placeholder="(555) 000-0000" />
+            </div>
+          </div>
+          <div>
+            <label for="orderEmail">Email Address</label>
+            <input type="email" id="orderEmail" placeholder="you@example.com" />
+          </div>
+          <div class="dialog-row">
+            <div>
+              <label for="orderDate">Pickup / Delivery Date</label>
+              <input type="date" id="orderDate" />
+            </div>
+            <div>
+              <label for="orderGuests">Number of Guests</label>
+              <select id="orderGuests">
+                <option value="">Select...</option>
+                <option>2–4</option>
+                <option>5–10</option>
+                <option>11–20</option>
+                <option>21–40</option>
+                <option>40+</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label for="orderAllergies">Allergies or Dietary Restrictions</label>
+            <input type="text" id="orderAllergies" placeholder="e.g. nut allergy, gluten-free, dairy-free…" />
+          </div>
+          <div>
+            <label for="orderRequests">Special Requests</label>
+            <textarea id="orderRequests" placeholder="Any substitutions, add-ons, occasion details, or delivery instructions…"></textarea>
+          </div>
+        </div>
+        <div class="dialog-footer">
+          <button class="btn-cancel" id="dialogCancel">Cancel</button>
+          <button class="btn-submit" id="dialogSubmit">Submit Order</button>
+        </div>
+      </div>
+
+      <div class="dialog-success" id="dialogSuccess">
+        <div class="checkmark">✅</div>
+        <h3>Order Received!</h3>
+        <p>Thank you! Teresa will be in touch shortly to confirm your board details.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2026 Teresa's Boards &nbsp;|&nbsp; All Rights Reserved
+  </footer>
+
+  <script>
+    const overlay = document.getElementById('orderDialog');
+    const dialogTitle = document.getElementById('dialogTitle');
+    const dialogSubtitle = document.getElementById('dialogSubtitle');
+    const dialogForm = document.getElementById('dialogForm');
+    const dialogSuccess = document.getElementById('dialogSuccess');
+
+    function openDialog(boardName, boardDesc) {
+      dialogTitle.textContent = boardName;
+      dialogSubtitle.textContent = boardDesc;
+      dialogForm.style.display = '';
+      dialogSuccess.style.display = 'none';
+      overlay.classList.add('open');
+      document.getElementById('orderName').focus();
+    }
+
+    function closeDialog() {
+      overlay.classList.remove('open');
+    }
+
+    document.querySelectorAll('.order-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.order-card');
+        const name = card.querySelector('.order-info h3').textContent;
+        const desc = card.querySelector('.order-info p').textContent;
+        openDialog(name, desc);
+      });
+    });
+
+    document.getElementById('dialogClose').addEventListener('click', closeDialog);
+    document.getElementById('dialogCancel').addEventListener('click', closeDialog);
+
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeDialog();
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeDialog();
+    });
+
+    document.getElementById('dialogSubmit').addEventListener('click', () => {
+      const name = document.getElementById('orderName').value.trim();
+      const email = document.getElementById('orderEmail').value.trim();
+      if (!name || !email) {
+        alert('Please enter your name and email address.');
+        return;
+      }
+      dialogForm.style.display = 'none';
+      dialogSuccess.style.display = 'block';
+    });
+  </script>
+
+</body>
+</html>
